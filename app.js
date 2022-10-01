@@ -131,7 +131,7 @@ $(document).ready(function () {
   let tools = new ToolsViewModel(globe, markers);
   let preview = new SearchPreviewViewModel(globe, MAPQUEST_API_KEY);
   let search = new SearchViewModel(globe, preview.previewResults, MAPQUEST_API_KEY);
-  
+
   // Activate the Knockout bindings between our view models and the html
   ko.applyBindings(layers, document.getElementById('layers'));
   ko.applyBindings(settings, document.getElementById('settings'));
