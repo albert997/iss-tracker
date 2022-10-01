@@ -30,6 +30,16 @@ import MarkersViewModel from './MarkersViewModel.js';
 import SearchViewModel from './SearchViewModel.js';
 import SearchPreviewViewModel from './SearchPreviewViewModel.js';
 
+var longitude;
+var latitude;
+var request = new XMLHttpRequest();
+request.open('GET', 'http://api.open-notify.org/iss-now.json', true);
+request.onload = function () {
+  const pasrsedResult = JSON.parse(this.response);
+  longitude = pasrsedResult.iss_position.longitude;
+  latitude = pasrsedResult.iss_position.latitude;
+}
+request.send();
 /* global $, ko, WorldWind */
 
 $(document).ready(function () {
@@ -61,7 +71,11 @@ $(document).ready(function () {
   var placeMarkAttributes = new WorldWind.PlacemarkAttributes(null);
   placeMarkAttributes.imageColor = new WorldWind.Color(1, 1, 0, 0.5);
   placeMarkAttributes.imageScale = 1000;
-  var placemark = new WorldWind.Placemark(new WorldWind.Position(51, 0, 2000), true, placeMarkAttributes);
+
+  console.log(longitude);
+  console.log(latitude);
+
+  var placemark = new WorldWind.Placemark(new WorldWind.Position(latitude, longitude, 100), true, placeMarkAttributes);
   placemarkLayer.addRenderable(placemark);
   
   // Add layers ordered by drawing order: first to last
