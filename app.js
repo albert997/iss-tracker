@@ -57,6 +57,11 @@ $(document).ready(function () {
 
   // Create the primary globe
   let globe = new Globe("globe-canvas");
+  var placemarkLayer = new WorldWind.RenderableLayer("Placemarks!!!", false);
+  var placeMarkAttributes = new WorldWind.PlacemarkAttributes(null);
+  placeMarkAttributes.imageScale = 100;
+  var placemark = new WorldWind.Placemark(new WorldWind.Position(51, 0, 10), true, placeMarkAttributes);
+  placemarkLayer.addRenderable(placemark);
   
   // Add layers ordered by drawing order: first to last
   globe.addLayer(new WorldWind.BMNGLayer(), {
@@ -120,6 +125,8 @@ $(document).ready(function () {
     category: "debug",
     enabled: false
   });
+
+  globe.addLayer(placemarkLayer);
 
   // -----------------------------------------------
   // Initialize Knockout view models and html views
