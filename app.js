@@ -59,8 +59,9 @@ $(document).ready(function () {
   let globe = new Globe("globe-canvas");
   var placemarkLayer = new WorldWind.RenderableLayer("Placemarks!!!", false);
   var placeMarkAttributes = new WorldWind.PlacemarkAttributes(null);
-  placeMarkAttributes.imageScale = 100;
-  var placemark = new WorldWind.Placemark(new WorldWind.Position(51, 0, 10), true, placeMarkAttributes);
+  placeMarkAttributes.imageColor = new WorldWind.Color(1, 1, 0, 0.5);
+  placeMarkAttributes.imageScale = 1000;
+  var placemark = new WorldWind.Placemark(new WorldWind.Position(51, 0, 2000), true, placeMarkAttributes);
   placemarkLayer.addRenderable(placemark);
   
   // Add layers ordered by drawing order: first to last
