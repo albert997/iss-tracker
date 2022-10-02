@@ -172,7 +172,7 @@ $(document).ready(function () {
       
       let { lat, lng } = tlejs.getLatLngObj(tleStr)
       const ISSPlacemark = addISSModel(orbitLayer, lat, lng, ISS_ALTITUDE)
-
+      globe.wwd.goTo(new WorldWind.Location(lat, lng));
       setInterval(() => {
         let { lat, lng } = tlejs.getLatLngObj(tleStr)
         ISSPlacemark.position = new WorldWind.Position(lat, lng, ISS_ALTITUDE)
