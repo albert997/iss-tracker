@@ -61,6 +61,16 @@ $(document).ready(function () {
 
   // Create the primary globe
   let globe = new Globe("globe-canvas");
+  var placemarkLayer = new WorldWind.RenderableLayer("Placemarks!!!", false);
+  var placeMarkAttributes = new WorldWind.PlacemarkAttributes(null);
+  placeMarkAttributes.imageColor = new WorldWind.Color(1, 1, 0, 0.5);
+  placeMarkAttributes.imageScale = 1000;
+
+  console.log(longitude);
+  console.log(latitude);
+
+  var placemark = new WorldWind.Placemark(new WorldWind.Position(latitude, longitude, 100), true, placeMarkAttributes);
+  placemarkLayer.addRenderable(placemark);
   
   // Add layers ordered by drawing order: first to last
   globe.addLayer(new WorldWind.BMNGLayer(), {
