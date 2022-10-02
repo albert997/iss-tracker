@@ -153,6 +153,7 @@ $(document).ready(function () {
       let lat = parseFloat(issLocationData.iss_position.latitude);
       let lon = parseFloat(issLocationData.iss_position.longitude);
       globe.updatePlaceMarkerPosition(layer, lat, lon);
+      globe.wwd.goTo(new WorldWind.Location(lat, lon));
     });
     
   }, 5000);
