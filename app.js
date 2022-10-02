@@ -30,6 +30,16 @@ import MarkersViewModel from './MarkersViewModel.js';
 import SearchViewModel from './SearchViewModel.js';
 import SearchPreviewViewModel from './SearchPreviewViewModel.js';
 
+var longitude;
+var latitude;
+var request = new XMLHttpRequest();
+request.open('GET', 'http://api.open-notify.org/iss-now.json', true);
+request.onload = function () {
+  const pasrsedResult = JSON.parse(this.response);
+  longitude = pasrsedResult.iss_position.longitude;
+  latitude = pasrsedResult.iss_position.latitude;
+}
+request.send();
 /* global $, ko, WorldWind */
 
 $(document).ready(function () {
@@ -57,6 +67,16 @@ $(document).ready(function () {
 
   // Create the primary globe
   let globe = new Globe("globe-canvas");
+  var placemarkLayer = new WorldWind.RenderableLayer("Placemarks!!!", false);
+  var placeMarkAttributes = new WorldWind.PlacemarkAttributes(null);
+  placeMarkAttributes.imageColor = new WorldWind.Color(1, 1, 0, 0.5);
+  placeMarkAttributes.imageScale = 1000;
+
+  console.log(longitude);
+  console.log(latitude);
+
+  var placemark = new WorldWind.Placemark(new WorldWind.Position(latitude, longitude, 100), true, placeMarkAttributes);
+  placemarkLayer.addRenderable(placemark);
   
   // Add layers ordered by drawing order: first to last
   globe.addLayer(new WorldWind.BMNGLayer(), {
@@ -134,7 +154,7 @@ $(document).ready(function () {
   let tools = new ToolsViewModel(globe, markers);
   let preview = new SearchPreviewViewModel(globe, MAPQUEST_API_KEY);
   let search = new SearchViewModel(globe, preview.previewResults, MAPQUEST_API_KEY);
-  
+
   // Activate the Knockout bindings between our view models and the html
   ko.applyBindings(layers, document.getElementById('layers'));
   ko.applyBindings(settings, document.getElementById('settings'));
